@@ -1,5 +1,6 @@
 # ada-2024-project-authenticdataaddicts
-Title:
+
+## Title:
 
 ## Abstract: 
 This project examines how lead actors' characteristics (height, ethnicity, gender, age) might influence a movie's success. By analyzing these traits across different genres, we aim to identify patterns linking specific actor attributes to successful movies. Data is gathered from CMU’s movie database, the IMDb non-commercial dataset, and Wikidata. Movie success is defined by two metrics: box office performance and critical reception. Since high-grossing movies may not always be well-received, and vice versa, separating performance from reception could yield to new insight. Ultimately, our goal is to determine how actor attributes influence a movie’s success, providing valuable insights for casting decisions and broader industry trends.
