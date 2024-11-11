@@ -13,7 +13,7 @@ This project examines how lead actors' characteristics (height, ethnicity, gende
 
 ## Additional datasets
 In addition to the CMU dataset, we also used:
-### [The IMDb non-commercial dataset (principles & ratings)](https://datasets.imdbws.com)
+### [The IMDb non-commercial dataset (principles, ratings & names)](https://datasets.imdbws.com)
 These datasets give us the lead actors for each movie as well as critic ratings, respectively. 
 ### [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page)
 By querying Wikidata, we can obtain a movie's IMDb and Freebase IDs, as well as box office earnings. Box office results can be used to supplement our main CMU dataset, and having a movie's associated IMDb and Freebase IDs allows us to more easily merge the IMDb dataset with the main dataset. 
