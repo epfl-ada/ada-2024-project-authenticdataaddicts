@@ -6,11 +6,15 @@ SELECT ?item ?freebase_id ?IMDb_ID ?title ?box_office WHERE {
       ?item p:P31/ps:P31/wdt:P279* wd:Q11424 .  # Filter for movies
 
       ?item wdt:P345 ?IMDb_ID .  # IMDB ID
-      OPTIONAL { ?item wdt:P646 ?freebase_id . }  # Freebase ID (Optional)
+      ?item wdt:P646 ?freebase_id .
 
       ?item wdt:P1476 ?title .  # Movie title
       ?item wdt:P577 ?pub_date .  # Release date
       FILTER(YEAR(?pub_date) <= 2012)
+ 
+      #(comment the next two lines to have all movies irrespective of length)
+      ?item wdt:P2047 ?duration . 
+      FILTER(?duration > 60) #Keep only movies over 60 minutes 
     }
   }
   OPTIONAL { ?item wdt:P2142 ?box_office .}  # Box office (Optional)
