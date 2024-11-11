@@ -20,7 +20,7 @@ def load_character_data():
     merged = pd.merge(character_data, actor_ethnicity, how='left', left_on='actor_ethnicity', right_on='Freebase ID')
 
     # Replace by the actual ethnicity label
-    merged["actor_ethnicity"] = merged["Label"]
+    merged["actor_ethnicity_label"] = merged["Label"]
 
     # Drop the unnecessary columns
     merged = merged.drop(columns=["Freebase ID", "URL", "Label"])
