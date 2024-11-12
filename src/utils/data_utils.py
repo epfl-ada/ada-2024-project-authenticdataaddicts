@@ -85,6 +85,7 @@ def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge
         Options are:
         - 'prioritize_first': Prioritize values from the first dataset (`df1`).
         - 'mean': Take the mean of values from both datasets.
+        - 'add_column': Here we just add a column, so no need to have merge strategy
     
     Returns:
     -------
@@ -101,13 +102,17 @@ def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge
     # Copy of the datasets to avoid modifying the originals
     df1_copy = df1.copy()
     df2_copy = df2.copy()
+
+    missing_before = 0
+    missing_after = 0
     
     # Drop duplicates based on the specified columns (to avoid the duplication when merging)
     df1_copy = df1_copy.drop_duplicates(subset=merge_cols_1)
     df2_copy = df2_copy.drop_duplicates(subset=merge_cols_2)
 
-    # Calculate missing values before the merge
-    missing_before = df1_copy[target_col].isna().mean()
+    if merge_strategy != "add_column":
+        # Calculate missing values before the merge
+        missing_before = df1_copy[target_col].isna().mean()
     
     # Perform the merge on the target column only (other columns remain unchanged)
     merged_df = pd.merge(df1_copy, 
@@ -124,16 +129,17 @@ def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge
         # Take the mean of both columns, ignoring NaN values by default
         merged_df[target_col] = merged_df[[target_col, f'{target_col}_from_second']].mean(axis=1)
     
-    # Drop the extra column from the second dataset
-    merged_df.drop([f'{target_col}_from_second'], axis=1, inplace=True)
-    
-    # Drop the additional merge columns from df2 if desired (optional step)
-    for col in merge_cols_2:
-        if f"{col}_from_second" in merged_df.columns:
-            merged_df.drop(columns=[f"{col}_from_second"], inplace=True)
-    
-    # Calculate missing values after the merge
-    missing_after = merged_df[target_col].isna().mean()
+    if merge_strategy != "add_column":
+        # Drop the extra column from the second dataset
+        merged_df.drop([f'{target_col}_from_second'], axis=1, inplace=True)
+        
+        # Drop the additional merge columns from df2 if desired (optional step)
+        for col in merge_cols_2:
+            if f"{col}_from_second" in merged_df.columns:
+                merged_df.drop(columns=[f"{col}_from_second"], inplace=True)
+        
+        # Calculate missing values after the merge
+        missing_after = merged_df[target_col].isna().mean()
     
     return merged_df, missing_before, missing_after
 
