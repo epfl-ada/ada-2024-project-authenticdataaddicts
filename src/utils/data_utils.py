@@ -59,7 +59,7 @@ def load_data(movie_path='data/movie.metadata.tsv', plot_path='data/plot_summari
 
 # ==================== DATA COMPLETION ====================
 
-def merge_for_completion(df1, df2, merge_col_1, merge_col_2, target_col, merge_strategy='prioritize_first'):
+def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge_strategy='prioritize_first'):
     """
     Merges two datasets based on the specified columns, merging only the target column from the second dataset.
 
@@ -71,11 +71,11 @@ def merge_for_completion(df1, df2, merge_col_1, merge_col_2, target_col, merge_s
     df2 : pd.DataFrame
         The second dataset (DataFrame) to merge.
     
-    merge_col_1 : str
-        The column in `df1` to merge on.
+    merge_cols_1 : list
+        The list of columns in `df1` to merge on.
     
-    merge_col_2 : str
-        The column in `df2` to merge on. 
+    merge_cols_2 : list
+        The list of columns in `df2` to merge on.
     
     target_col : str
         The column to calculate the missing value percentage increase.
@@ -97,20 +97,24 @@ def merge_for_completion(df1, df2, merge_col_1, merge_col_2, target_col, merge_s
     float
         The number of missing after the merging
     """
-    
+
     # Copy of the datasets to avoid modifying the originals
     df1_copy = df1.copy()
     df2_copy = df2.copy()
+    
+    # Drop duplicates based on the specified columns (to avoid the duplication when merging)
+    df1_copy = df1_copy.drop_duplicates(subset=merge_cols_1)
+    df2_copy = df2_copy.drop_duplicates(subset=merge_cols_2)
 
     # Calculate missing values before the merge
     missing_before = df1_copy[target_col].isna().mean()
     
     # Perform the merge on the target column only (other columns remain unchanged)
     merged_df = pd.merge(df1_copy, 
-                         df2_copy[[merge_col_2, target_col]], 
+                         df2_copy[merge_cols_2 + [target_col]], 
                          how='left', 
-                         left_on=merge_col_1, 
-                         right_on=merge_col_2, 
+                         left_on=merge_cols_1, 
+                         right_on=merge_cols_2, 
                          suffixes=('', '_from_second'))
     
     # Handle missing values based on the specified merge strategy
@@ -122,6 +126,11 @@ def merge_for_completion(df1, df2, merge_col_1, merge_col_2, target_col, merge_s
     
     # Drop the extra column from the second dataset
     merged_df.drop([f'{target_col}_from_second'], axis=1, inplace=True)
+    
+    # Drop the additional merge columns from df2 if desired (optional step)
+    for col in merge_cols_2:
+        if f"{col}_from_second" in merged_df.columns:
+            merged_df.drop(columns=[f"{col}_from_second"], inplace=True)
     
     # Calculate missing values after the merge
     missing_after = merged_df[target_col].isna().mean()
