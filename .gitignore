@@ -10,6 +10,7 @@ data/ratings_IMDb.json
 data/title.principals.tsv
 data/title.ratings.tsv
 data/tmbd_movies.csv
+data/title.basics.tsv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
