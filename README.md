@@ -22,19 +22,17 @@ This is a comprehensive database of over one million movies and contains informa
 ### Methods
 #### Getting to know the data
 This first step is crucial, as it allows us to determine whether we have all the necessary information in our dataset, or whether it must be complemented with outside datasets. In the CMU dataset, we have a non-negligeable amount of missing box office results, and we do not have information on lead actors or movie ratings. As such, we decided to utilise the TMDb dataset to complement our box office results, and the IMDb datasets in order to obtain movie ratings as well as information on lead actors. 
-#### Data pre-processing
+#### Data processing
+##### Pre-processing
 The first step we needed to do is to merge the datasets. We merged our datasets and split it into 5 datasets:
-##### full_movie_data_preprocessed:
-This contains the data of all our movies after preprocessing (removing NaNs, outliers, etc.).
-##### full_character_data_preprocessed:
-This is similar to the first dataset but for character data.
-##### subset_movies
-This dataset contains only movies with information on at least one main actor.
-#### subset_characters
-This dataset is filtered to contain only characters for which information is available.
-#### lead_actors
-This dataset contains the lead actors and their corresponding information.
-#### Deeper Analysis
+- full_movie_data_preprocessed: This contains the data of all our movies after preprocessing (removing NaNs, outliers, etc.).
+- full_character_data_preprocessed: This is similar to the first dataset but for character data.
+- subset_movies: This dataset contains only movies with information on at least one main actor.
+- subset_characters: This dataset is filtered to contain only characters for which information is available.
+- lead_actors: This dataset contains the lead actors and their corresponding information.
+##### Deeper Analysis
+Once our preprocessing was done, we proceded to do a deeper analysis of the data. For this we plotted the distribution of actor attributes (age, height, ethnicity), as well as that of movie characteristics (runtime, box office, ratings)
+#### Something something P3
 
 ### Timeline:
 
