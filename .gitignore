@@ -11,7 +11,7 @@ data/ratings_IMDb.json
 
 data/title.principals.tsv
 data/title.ratings.tsv
-data/names.basics.tsv
+data/name.basics.tsv
 data/tmbd_movies.csv
 
 # Byte-compiled / optimized / DLL files
