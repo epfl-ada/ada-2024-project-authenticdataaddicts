@@ -1,16 +1,14 @@
 # MacOS
 **/.DS_Store
 
+# Other
+**/.vscode/
 # Generated JSON files
 data/characters_CMU.json
 data/movies_CMU.json
-data/name.basics.tsv
 data/principals_IMDb.json
 data/ratings_IMDb.json
-data/title.principals.tsv
-data/title.ratings.tsv
-data/tmbd_movies.csv
-data/title.basics.tsv
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

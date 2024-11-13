@@ -1,3 +1,4 @@
 data/title.principals.tsv filter=lfs diff=lfs merge=lfs -text
 data/title.ratings.tsv filter=lfs diff=lfs merge=lfs -text
 data/names.basics.tsv filter=lfs diff=lfs merge=lfs -text
+data/tmbd_movies.csv filter=lfs diff=lfs merge=lfs -text
