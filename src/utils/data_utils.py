@@ -145,8 +145,75 @@ def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge
 
 
 
-
 # ==================== PREPROCESSING ====================
+
+
+def filter_attribute(df, target_col, v_min, v_max):
+    """
+    Keep only the dataframe rows with a valid range of the specified attribute.
+
+    Parameters:
+    ----------
+    df : pd.DataFrame
+        The dataset (DataFrame) to preprocess.
+    
+    target_col : str
+        The column that contains the attributes we want to filter.
+        
+    v_min : float
+        Minimum valid value for an attribute in the column.
+    
+    v_max : float
+        Maximum valid value for an attribute in the column.
+    
+    Returns:
+    -------
+    pd.DataFrame
+        A DataFrame with 'target_col' having only values between v_min and v_max.
+    
+    float
+        The reduction in size of the dataset.
+    """
+    # Create query to keep values in target_col between v_min and v_max
+    filter_query = target_col + ' > ' + str(v_min) + ' and ' + target_col + ' < ' + str(v_max)
+    df_filtered = df.query(filter_query)
+    # Compute reduction in size
+    reduction = 1 - df_filtered.shape[0] / df.shape[0]
+    
+    return df_filtered, reduction
+
+
+def keep_only_non_nans(df, columns_list):
+    """
+    Keep only non NaN values for each specified column.
+
+    Parameters:
+    ----------
+    df : pd.DataFrame
+        The dataset (DataFrame) to preprocess.
+    
+    columns_list : list (of str)
+        The list of columns names (str) where we want to remove NaNs.
+    
+    Returns:
+    -------
+    pd.DataFrame
+        A DataFrame where all values in the specified columns are not NaNs.
+    
+    float
+        The reduction in size of the dataset.
+    """
+    # Create a mask for non-NaN values across all specified columns
+    not_na_mask = df[columns_list].notna().all(axis=1)
+    
+    # Apply the mask to get a cleaned DataFrame
+    df_cleaned = df[not_na_mask].copy()
+    
+    # # Compute reduction in size
+    reduction = 1 - df_cleaned.shape[0] / df.shape[0]
+    
+    return df_cleaned, reduction
+    
 
 def standardize(df: pd.DataFrame):
     """Standardize data."""
