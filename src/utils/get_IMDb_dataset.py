@@ -3,6 +3,14 @@ import gzip
 import shutil
 import os
 def get_IMDb_dataset(filename):
+    """Download specifiet IMDb datasets and saves it to the data folder
+
+    Args: 
+        filename (str): Name of the IMDb dataset to download
+
+    Returns: None
+    """
+     
     url = "https://datasets.imdbws.com/" + filename + ".gz"
     r = requests.get(url)
     #r.encoding = "utf-8"
