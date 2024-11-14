@@ -1,9 +1,9 @@
 # ada-2024-project-authenticdataaddicts
 
-## Recipe for Success: Uncovering the key ingredients for a hit movie
+## Recipe for Success: Uncovering the actors behind a hit movie
 
 ### Abstract
-This project examines what leads to a movies' sucess. We first study the intrinsic characterics of the movie itself, such as its genre and its length, and how they correlate to a movie's success. We then analyze the role of the lead actors to determine how the actors' characteristics (height, ethnicity, gender, age) might influence a movie's success. By analyzing these traits across different genres, we aim to identify patterns linking specific actor attributes to successful movies. Data is gathered from CMU’s movie database, the IMDb non-commercial dataset, and the TMDb Kaggle dataset. Movie success is defined by two metrics: box office performance and critical reception. Since high-grossing movies may not always be well-received, and vice versa, separating performance from reception could yield new insight. Ultimately, our goal is to determine how actor attributes influence a movie’s success, providing valuable understanding for casting decisions and broader industry trends.
+This project examines what leads to a movies' sucess, with an emphasis on the effect of actors on movie success. We first study the intrinsic characterics of the movie itself, such as its genre and its length, and how they correlate to a movie's success in order to establish some general information. We then analyze the role of the lead actors to determine how the actors' characteristics (height, ethnicity, gender, age) might influence a movie's success. By analyzing these traits across different genres, we aim to identify patterns linking specific actor attributes to successful movies. Data is gathered from CMU’s movie database, the IMDb non-commercial dataset, and the TMDb Kaggle dataset. Movie success is defined by two metrics: box office performance and critical reception. Since high-grossing movies may not always be well-received, and vice versa, separating performance from reception could yield new insight. Ultimately, our goal is to determine how actor attributes influence a movie’s success, providing valuable understanding for casting decisions and broader industry trends.
 
 ### Research questions
 - What genres and movie length lead to the most successful movies?
