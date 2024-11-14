@@ -147,6 +147,10 @@ def merge_for_completion(df1, df2, merge_cols_1, merge_cols_2, target_col, merge
 
 # ==================== PREPROCESSING ====================
 
+def compute_reduction(df_before, df_after):
+    """ Auxiliary function to compute the reduction in size between two datasets.
+    """
+    return 1 - df_after.shape[0]/df_before.shape[0]
 
 def filter_attribute(df, target_col, v_min, v_max):
     """
@@ -177,8 +181,7 @@ def filter_attribute(df, target_col, v_min, v_max):
     # Create query to keep values in target_col between v_min and v_max
     filter_query = target_col + ' > ' + str(v_min) + ' and ' + target_col + ' < ' + str(v_max)
     df_filtered = df.query(filter_query)
-    # Compute reduction in size
-    reduction = 1 - df_filtered.shape[0] / df.shape[0]
+    reduction = compute_reduction(df, df_filtered)
     
     return df_filtered, reduction
 
@@ -206,11 +209,9 @@ def keep_only_non_nans(df, columns_list):
     # Create a mask for non-NaN values across all specified columns
     not_na_mask = df[columns_list].notna().all(axis=1)
     
-    # Apply the mask to get a cleaned DataFrame
+    # Apply the mask to clean the DataFrame
     df_cleaned = df[not_na_mask].copy()
-    
-    # # Compute reduction in size
-    reduction = 1 - df_cleaned.shape[0] / df.shape[0]
+    reduction = compute_reduction(df, df_cleaned)
     
     return df_cleaned, reduction
     
