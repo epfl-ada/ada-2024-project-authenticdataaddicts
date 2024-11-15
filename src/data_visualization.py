@@ -279,3 +279,38 @@ def count_movies(
         hue=hue,
         axes=axes,
     )
+
+def inflation_plots(movie_inflation_data, top = False):
+    """Plot with the average box office revenue over time (adjusted & unadjusted) 
+    for all movies & for top 10 movies
+
+    Args:
+        movie_inflation_data (pd.DataFrame): The inflation_dataset
+        top (bool, optional): If True, plots for the top 10 movies. False if nothing specified.
+    """
+    #Group by release year and calculate the average box office revenue
+    if top: #For top 10 movies
+        avg_box_office = movie_inflation_data.groupby('release_year').apply(
+            lambda x: x.nlargest(10, 'box_office_revenue')
+        ).reset_index(drop=True)
+        avg_box_office = avg_box_office.groupby('release_year')[['adjusted_box_office', 'box_office_revenue']].mean()
+    else: #For all movies
+        avg_box_office = movie_inflation_data.groupby('release_year')[['adjusted_box_office', 'box_office_revenue']].mean()
+
+    #Convert box office to millions of dollars for readability
+    avg_box_office['adjusted_box_office'] = avg_box_office['adjusted_box_office'] / 1e6
+    avg_box_office['box_office_revenue'] = avg_box_office['box_office_revenue'] / 1e6
+
+    #Plot the average box office revenue over time (adjusted & unadjuste)
+    fig, ax = plt.subplots(figsize=(15, 6))
+
+    sns.scatterplot(data=avg_box_office, x=avg_box_office.index, y='adjusted_box_office', label="Adjusted Box Office", color='blue')
+    sns.scatterplot(data=avg_box_office, x=avg_box_office.index, y='box_office_revenue', label="Unadjusted Box Office", color='red')
+
+    ax.set_title("Average Box Office of Movies over Time")
+    ax.set_xlabel("Movie release Year")
+    ax.set_ylabel("Average Box Office Revenue (in millions dollars)")
+    ax.grid(axis='y')
+    ax.legend()
+
+    plt.show()

@@ -249,7 +249,25 @@ def map_ethnicities(character_data, ethnicities_file_path='data/actor_ethnicity.
     return merged_character_data
 
 def preprocess_characters(character_data):
+    """
+    Map ethnicity labels to character data using actor ethnicity information.
 
+    This function checks if a local CSV file containing actor ethnicity labels exists.
+    If the file is not found, it fetches ethnicity labels from Freebase using unique values 
+    of 'actor_ethnicity' in the provided character data. It then merges these ethnicity labels
+    with the character data, adding a new column with the actual ethnicity label.
+
+    Parameters:
+    ----------
+    character_data : pd.DataFrame
+        A DataFrame containing character data, including an 'actor_ethnicity' column 
+        with Freebase IDs representing actor ethnicities.
+    Returns:
+    -------
+    pd.DataFrame
+        A DataFrame containing the character data with only valid columns, 
+        with age data completed through date of birth when possible.
+    """
     merged_character_data = character_data.copy()
 
     # Convert dob and movie_release_date to date
@@ -364,6 +382,7 @@ def preprocess_movies(movie_data):
     return movie_data_valid_revenue
 
 def extract_movies_with_lead_actors_data(movie_data_valid, character_data_valid):
+    
     # Extract unique pairs of (freebase_movie_id, lead_actor) from the movie dataset
     lead_actor_pairs = pd.concat([
         movie_data_valid[['freebase_movie_id', 'lead_actor_1']].rename(columns={'lead_actor_1': 'actor_name'}),
@@ -385,6 +404,28 @@ def extract_movies_with_lead_actors_data(movie_data_valid, character_data_valid)
     return lead_actor_data
 
 def adjust_inflation(movie_data):
+    """
+    Calculate inflation adjusted box office revenue for movies in the dataset.
+
+    This function takes simple inflation data and calculates the compounded inflation, 
+    then uses compound inflation to adjust the box office revenue of movies to 2012 dollars.
+
+    Parameters:
+    ----------
+    movie_data : pd.DataFrame
+        A DataFrame containing movie data, with columns such as 'movie_release_date',
+        'runtime', 'languages', 'countries', 'genres', 'lead_actor_1', 'lead_actor_2',
+        'box_office_revenue', 'averageRating', and 'numVotes'.
+
+    Returns:
+    -------
+    pd.DataFrame
+        A cleaned and filtered DataFrame containing only movies with released in the years 
+        for which inflation data exists, with an additional 'adjusted_box_office' column for
+        box office revenue adjusted to 2012 dollars.
+    percentage_filtered_inflation
+        The proportion of movies that were filtered out due to missing inflation
+    """
     start_date = '1940-01-01'
     inflation_date = '1957-12-31'
     future_date = '2012-11-04'
@@ -437,7 +478,7 @@ def adjust_inflation(movie_data):
 
     #Drop unnecessary columns
     movie_data_inflation = movie_data_inflation[['wikipedia_movie_id', 'freebase_movie_id', 'movie_name',
-       'movie_release_date', 'box_office_revenue', 'adjusted_box_office']]
+       'release_year', 'movie_release_date', 'box_office_revenue', 'adjusted_box_office']]
 
     return movie_data_inflation, percentage_filtered_inflation
 
