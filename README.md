@@ -1,6 +1,6 @@
 # ada-2024-project-authenticdataaddicts
 
-# Recipe for Success: Uncovering the actors behind a hit movie
+## Recipe for Success: Uncovering the actors behind a hit movie
 
 ### Abstract
 While a movie storyline is often seen as its core, other factors like cast or genres may influence its success.
