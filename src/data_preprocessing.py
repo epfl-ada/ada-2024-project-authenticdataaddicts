@@ -342,7 +342,7 @@ def preprocess_movies(movie_data):
     movie_data_preprocessed = movie_data.copy()
     
     # Drop unnecessary columns
-    movie_data_preprocessed = movie_data_preprocessed.drop(columns=['title', 'release_date', 'movie_release_year', 'title_from_second', 'movie_release_year', 'Year', 'Compounded_Inflation', 'release_year'])
+    movie_data_preprocessed = movie_data_preprocessed.drop(columns=['title', 'release_date', 'movie_release_year', 'title_from_second', 'movie_release_year', 'Year', 'Compounded_Inflation'])
 
     # Set lead_actor_2 to NaN where it is the same as lead_actor_1
     movie_data_preprocessed.loc[movie_data_preprocessed['lead_actor_1'] == movie_data_preprocessed['lead_actor_2'], 'lead_actor_2'] = pd.NA
