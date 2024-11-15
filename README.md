@@ -32,22 +32,19 @@ We first needed to merge the datasets. We did this and split it into 5 datasets:
 - subset_characters: filtered to contain only characters for which (all) information is available.
 - lead_actors: contains the lead actors and their corresponding information.
 #### Task 3: Deeper Analysis
-We conducted a deeper analysis of the preprocessed data, to see if we could already find some interesting patterns relevant to our research questions.
-#### Task 4: Implementation and putting it all together
-Here we want to expand on what we did in Task 3, either by perfecting the graphs and models we made or by going deeper. In order to this, we will implement the following sub-tasks:
-##### Box office and Inflation
-We established that the USA was by far the number 1 filmmaker, as such, adjusted box office is indexed on US inflation and given in dollars. We want to see how old movies compare to new movies when levelling the playing field. This can be done through scatterplots of both the average box office return, adjusted for inflation, and the average box office of the ten highest grossing movies in a given year. This is because we may not have information about very old obscure and unsuccessfull movies. By adjusting for inflation, we ensure that our data is not unfairly biaised towards recent releases. 
-##### The Effects of Gender
-Does having lead actors of the same gender help or hurt a movie's performance? In order to determine this with two vizualizations:
-- First, a histogram for the average ratings/box office results for movies where both lead actors are the same gender, and those where both lead actors are different genders.
-- Second, a pie chart with these two categories for the top movies across different genres.
-##### Ethnicity and Height
-To visualize this, we can use stacks (for height, we would us ranges rather than an exact number). We can compare the stack of the average actor with the stack of the lead actors of the most successful movies. 
-##### To be Good or to be Popular? 
-Here, we want to analyze the distribution of movies ratings compared to box office results. Are successful movies in one category necessarily successful in the other? In order to find out, we want to implement a scatterplot heatmap with one axis representing movie ratings and the other box office results. This is a great visualisation tool to see where most movies place on the 2D map.
+We conducted a deeper analysis of the preprocessed data, to see if we could already find some interesting patterns relevant to our research questions. We did the following sub-tasks:
+  - 3.1: *General deeper analysis and visualisation* of the preprocessed data.
+  - 3.2: *Comparison between lead actors and all actors.*
+  - 3.3: *Bow office and inflation*: adjust the box office on inflation, compare old and recent movies.
+  - 3.4: *Low vs high rating/revenue analysis*.
+
+These are future sub-tasks we wish to implement to complete the deep analysis.
+  - 3.5: *Effect of gender*: does having lead actors of the same gender help or hurt a movie's performance? We could first do a histogram for the average ratings/box office results for movies where both lead actors are the same gender, and those where both lead actors are different genders. Second, we would do a pie chart with these two categories for the top movies across different genres.
+  - 3.6: *Ethnicity and height*. To visualize this, we can use stacks (for height, we would use ranges rather than an exact number). We can compare the stack of the average actor with the stack of the lead actors of the most successful movies. 
+  - 3.7: *To be good or to be popular?* Analyzing the distribution of movie ratings compared to box office results. Here, we want to analyze the distribution of movies ratings compared to box office results. Are successful movies in one category necessarily successful in the other? In order to find out, we want to implement a scatterplot heatmap with one axis representing movie ratings and the other box office results. This is a great visualisation tool to see where most movies place on the 2D map.
 
 ### Proposed timeline:
-15.11: Tasks 1-4
+15.11: Tasks 1, 2, 3.1-3.4
 29.11: Homework 2
 TODO
 20.12: Deadline P3
