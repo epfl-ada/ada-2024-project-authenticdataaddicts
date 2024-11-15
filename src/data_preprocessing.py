@@ -87,67 +87,6 @@ def keep_only_non_nans(df, columns_list):
     return df_cleaned, reduction
     
 
-def standardize(df):
-    """
-    Standardize the numeric columns in the dataset.
-
-    Parameters:
-    ----------
-    df : pd.DataFrame
-        The dataset to be standardized.
-    
-    Returns:
-    -------
-    pd.DataFrame
-        A DataFrame with standardized numeric columns.
-    """
-
-    # Keep only numerical
-    numeric_df = df.select_dtypes(include=[np.number])
-    
-    # Calculate mean and standard deviation
-    mean = numeric_df.mean(axis=0, skipna=True)
-    std = numeric_df.std(axis=0, skipna=True)
-    
-    # Standardized
-    standardized_numeric_df = (numeric_df - mean) / std
-
-    standardized_df = df.copy()
-    standardized_df[numeric_df.columns] = standardized_numeric_df
-    
-    return standardized_df
-
-def replace_nans(df, method='mean'):
-    """
-    Replace NaN values in the dataset using the specified method.
-
-    Parameters:
-    ----------
-    df : pd.DataFrame
-        The dataset where NaN values are to be replaced.
-    
-    method : str, optional
-        The method to use for filling NaNs: 'mean' or 'median'. Default is 'mean'.
-    
-    Returns:
-    -------
-    pd.DataFrame
-        A DataFrame with NaNs replaced by the specified method.
-    
-    Raises:
-    ------
-    ValueError
-        If the specified method is not 'mean' or 'median'.
-    """
-
-    if method == 'mean':
-        fill_values = df.mean(numeric_only=True, skipna=True)
-    elif method == 'median':
-        fill_values = df.median(numeric_only=True, skipna=True)
-    else:
-        raise ValueError("Method must be 'mean' or 'median'")
-    return df.fillna(fill_values)
-
 def extract_values(data, clean_func=None):
     """
     Extract values from a string-represented dictionary, optionally applying a cleaning function.
