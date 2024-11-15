@@ -177,7 +177,7 @@ def extract_values(data, clean_func=None):
         
         if clean_func and values:
             values = [clean_func(value) for value in values]
-        
+            
         return values
     except:
         return None
@@ -342,7 +342,7 @@ def preprocess_movies(movie_data):
     movie_data_preprocessed = movie_data.copy()
 
     # Drop duplicated columns
-    movie_data_extracted = movie_data_preprocessed.drop(columns=['title', 'release_date', 'release_date_from_second', 'title_from_second'])
+    movie_data_extracted = movie_data_preprocessed.drop(columns=['title', 'release_date', 'movie_release_year', 'title_from_second', 'movie_release_year'])
 
     # Set lead_actor_2 to NaN where it is the same as lead_actor_1
     movie_data_extracted.loc[movie_data_extracted['lead_actor_1'] == movie_data_extracted['lead_actor_2'], 'lead_actor_2'] = pd.NA
