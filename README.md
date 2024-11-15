@@ -18,8 +18,8 @@ In addition to the CMU dataset, we also used:
 These datasets give us the lead actors for each movie as well as critic ratings and the names corresponding to the unique actor ID, respectively, as the information for main actors and movie ratings is not included in the CMU dataset. 
 #### [TMDb Kaggle dataset](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies?resource=download)
 This is a comprehensive database of over one million movies and contains information movies, including a movie's rating and box office performance. This dataset helps complement the CMU and IMDb datasets when information about a movie's rating or box office is missing. 
-#### [US Bureau of Labor Inflation Statistics](https://data.bls.gov/pdq/SurveyOutputServlet)
-This gives us the US inflation numbers dating back to 1958. It can be used in order to calculate inflation adjusted box office results. 
+#### [US Bureau of Labor Inflation Statistics](https://data.bls.gov/timeseries/CUUR0000SA0L1E?output_view=pct_12mths)
+This gives us the US inflation numbers dating back to 1958. It can be used in order to calculate inflation adjusted box office results. To access the data, click on the provided link, then More Formatting Options, and choose 1957-2012 with annual data, and save in a comma delimited file.
 
 ### Methods
 #### Getting to know the data
