@@ -46,7 +46,7 @@ def histogram_plots(
             bins=bins[i],
             log_scale=log_scale[i],
             legend=True if hue else False,
-            stat="proportion",
+            stat="count",
         )
         axes[i].set_title(titles[i])
         axes[i].set_xlabel(labels[i])
