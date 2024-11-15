@@ -96,5 +96,4 @@ Florian Comte (florian.comte@epfl.ch)
 David Gauch (david.gauch@epfl.ch)
 Mina Tang (mina.tang@epfl.ch)
 
-#### Note: 
-As per specified on [Ed](https://edstem.org/eu/courses/1490/discussion/140562), we did not count the setup and usage as part of the 1000 word limit.
+**Note:** As per specified on [Ed](https://edstem.org/eu/courses/1490/discussion/140562), we did not count the setup and usage as part of the 1000 word limit.
