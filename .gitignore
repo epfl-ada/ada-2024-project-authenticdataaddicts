@@ -3,17 +3,10 @@
 
 # Other
 **/.vscode/
-# Generated JSON files
-data/characters_CMU.json
-data/movies_CMU.json
-data/principals_IMDb.json
-data/ratings_IMDb.json
 
-data/title.basics.tsv
-data/title.principals.tsv
-data/title.ratings.tsv
-data/name.basics.tsv
-data/tmbd_movies.csv
+data/*
+!data/preprocessed
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
