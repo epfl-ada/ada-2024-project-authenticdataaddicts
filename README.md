@@ -66,3 +66,32 @@ Ezra: 2, 3.2, 3.6
 Florian: 1, 2, 3.8
 Mina: 1, 3.4, 3.7
 All team members will collaborate on Task 5 to include visualization of their tasks.
+
+## Setup and usage
+
+### Files and Folders Description
+* `results.ipynb`: the main notebook with all our results.
+* `data/`: folder containing all datasets (after loading them). See the dedicated README for more details.
+* `data/preprocessed`: folder containing the preprocessed data (to directly do the analysis).
+* `src/`: folder containing the utility functions for the different steps of the project:
+    - `data_completion.py`: for merging and completing our datasets;
+    - `data_fetching.py`: to fetch and query some of the datasets;
+    - `data_loading.py`: to load the CMU movie dataset;
+    - `data_preprocessing`: useful tools for preprocessing;
+    - `data_visualization.py`: useful tools for data visualization.
+
+### Get started
+1. Clone this github repository.
+2. Make sure to have all libraries from the requirements.txt [file](requirements.txt) installed. If not, run the following command in your terminal:
+```
+pip install -r requirements.txt
+```
+3. All data not in the repo should be directly downloadable via the second cell of the main notebook (so no need to download them separately).
+4. To reproduce our results, run the jupyter notebook `results.ipynb`. The first part (before Deep Analysis) could take a few minutes (due to the large size of some of the datasets).
+
+### Contributors
+Colin Berger (colin.berger@epfl.ch)
+David Gauch (david.gauch@epfl.ch)
+Ezra Baup (estelle.baup@epfl.ch)
+Florian Comte (florian.comte@epfl.ch)
+Mina Tang (mina.tang@epfl.ch)
