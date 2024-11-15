@@ -383,3 +383,61 @@ def extract_movies_with_lead_actors_data(movie_data_valid, character_data_valid)
     print(lead_actor_data[['actor_name', 'actor_dob', 'actor_gender', 'actor_ethnicity_label', 'actor_height', 'actor_age_at_release']].isna().mean()*100)
 
     return lead_actor_data
+
+def adjust_inflation(movie_data):
+    start_date = '1940-01-01'
+    inflation_date = '1957-12-31'
+    future_date = '2012-11-04'
+    #Movies before we have inflation data
+    old_movies = movie_data[(movie_data['movie_release_date'] >= start_date) & (movie_data['movie_release_date'] <= inflation_date)]
+
+    #Movies after wikipedia box office dump
+    future_movies = movie_data[(movie_data['movie_release_date'] > future_date)]
+
+    percentage_filtered_inflation = (old_movies.shape[0] + future_movies.shape[0]) / movie_data.shape[0]
+
+    #Filtered movies with box office and inflation data
+    filtered_movies = old_movies = movie_data[(movie_data['movie_release_date'] > inflation_date) & (movie_data['movie_release_date'] <= future_date)]
+    
+    #Load simple inflation data 
+    inflation = pd.read_csv('data/inflation.csv')
+
+    #Calculate compound inflation and store in csv
+    inflation['Compounded_Inflation'] = 0.0
+    current = 1
+
+    for index, row in inflation.iterrows():
+        inflation_rate = row['Inflation'] / 100 #decimal inflation rate
+        current *= (1 + inflation_rate) 
+        compounded_inflation = (current - 1) * 100 #compounded inflation calculation
+        inflation.at[index, 'Compounded_Inflation'] = compounded_inflation #store result in dataframe, inflation in %
+    
+    inflation.to_csv('data/compounded_inflation.csv', index=False)
+
+    movie_data_inflation = filtered_movies.copy()
+
+    #Load compounded inflation data
+    inflation_c = pd.read_csv('data/compounded_inflation.csv')
+
+    #Convert to datetime & get release year
+    movie_data_inflation['movie_release_date'] = pd.to_datetime(movie_data_inflation['movie_release_date']) 
+    movie_data_inflation['release_year'] = movie_data_inflation['movie_release_date'].dt.year 
+
+    #Merge the datasets to include inflation
+    movie_data_inflation = movie_data_inflation.merge(
+        inflation_c[['Year', 'Compounded_Inflation']], 
+        left_on='release_year', 
+        right_on='Year', 
+        how='left'
+    )
+    #Calculate the adjusted box office revenue in 2012 dollars
+    movie_data_inflation['adjusted_box_office'] = (
+        movie_data_inflation['box_office_revenue'] / (1 + movie_data_inflation['Compounded_Inflation'] / 100) * (1 + inflation_c['Compounded_Inflation'].iloc[-1]/100)  #box office value in 1958 dollars then convert to 2012 dollars
+    )
+
+    #Drop unnecessary columns
+    movie_data_inflation = movie_data_inflation[['wikipedia_movie_id', 'freebase_movie_id', 'movie_name',
+       'movie_release_date', 'box_office_revenue', 'adjusted_box_office']]
+
+    return movie_data_inflation, percentage_filtered_inflation
+
