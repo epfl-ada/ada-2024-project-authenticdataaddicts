@@ -60,11 +60,11 @@ This would be the final step: presenting our project and results by telling a st
 20.12.2024: Deadline P3 <br /> 
 
 ### Organization with the team (internal milestones until P3)
-Colin: 3.3, 3.5, 4 <br /> 
-David: 1, 2, 3.1 <br /> 
-Ezra: 2, 3.2, 3.6 <br /> 
-Florian: 1, 2, 3.8 <br /> 
-Mina: 1, 3.4, 3.7 <br /> 
+Colin: 3.7, 4 <br /> 
+David: 3.6, 3.8 <br /> 
+Ezra: 3.6, 3.8 <br /> 
+Florian: 3.8, 4 <br /> 
+Mina: 3.7, 4 <br /> 
 All team members will collaborate on Task 5 to include visualization of their tasks.
 
 ## Setup and usage
