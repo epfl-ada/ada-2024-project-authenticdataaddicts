@@ -37,7 +37,7 @@ We conducted a deeper analysis of the preprocessed data, to see if we could alre
   - 3.1: *General deeper analysis and visualisation* of the preprocessed data.
   - 3.2: *Comparison between lead actors and all actors.*
   - 3.3: *First Regression analysis*.
-  - 3.4: *Bow office and inflation*: adjust the box office on inflation, compare old and recent movies.
+  - 3.4: *Box office and inflation*: adjust the box office on inflation, compare old and recent movies.
   - 3.5: *Low vs high rating/revenue analysis*.
 
 These are future sub-tasks we wish to implement to complete the deep analysis.
