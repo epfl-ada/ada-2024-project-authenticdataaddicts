@@ -382,7 +382,26 @@ def preprocess_movies(movie_data):
     return movie_data_valid_revenue
 
 def extract_movies_with_lead_actors_data(movie_data_valid, character_data_valid):
-    
+    """
+    Associate actor information to lead actors in the movie dataset.
+
+    This function enriches our dataset with information on each movie's lead actors. 
+
+    Parameters:
+    ----------
+    movie_data_valid: pd.DataFrame
+        A DataFrame containing valid movie data, with columns such as 'movie_release_date',
+        'runtime', 'languages', 'countries', 'genres', 'lead_actor_1', 'lead_actor_2',
+        'box_office_revenue', 'averageRating', and 'numVotes'.
+    character_data_valid: pd.DataFrame
+        A DataFrame containing valid character data, with columns such as 'freebase_movie_id',
+        'actor_name', 'actor_dob'. 
+
+    Returns:
+    -------
+    pd.DataFrame
+        A dataframe containing lead actor data for each movie in the movie dataset.
+    """ 
     # Extract unique pairs of (freebase_movie_id, lead_actor) from the movie dataset
     lead_actor_pairs = pd.concat([
         movie_data_valid[['freebase_movie_id', 'lead_actor_1']].rename(columns={'lead_actor_1': 'actor_name'}),
