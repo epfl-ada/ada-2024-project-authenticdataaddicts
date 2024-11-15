@@ -52,19 +52,19 @@ With all this work, we would like to find if we can predict the revenue or ratin
 This would be the final step: presenting our project and results by telling a story.
 
 ### Proposed timeline:
-15.11.2024: Tasks 1, 2, 3.1-3.5
-29.11.2024: Homework 2
-06.12.2024: Tasks 3.6-3.8
-09.12.2024: Task 4
-18.12.2024: Task 5
-20.12.2024: Deadline P3
+15.11.2024: Tasks 1, 2, 3.1-3.5 <br /> 
+29.11.2024: Homework 2 <br /> 
+06.12.2024: Tasks 3.6-3.8 <br /> 
+09.12.2024: Task 4 <br /> 
+18.12.2024: Task 5 <br /> 
+20.12.2024: Deadline P3 <br /> 
 
 ### Organization with the team (internal milestones until P3)
-Colin: 3.3, 3.5, 4
-David: 1, 2, 3.1
-Ezra: 2, 3.2, 3.6
-Florian: 1, 2, 3.8
-Mina: 1, 3.4, 3.7
+Colin: 3.3, 3.5, 4 <br /> 
+David: 1, 2, 3.1 <br /> 
+Ezra: 2, 3.2, 3.6 <br /> 
+Florian: 1, 2, 3.8 <br /> 
+Mina: 1, 3.4, 3.7 <br /> 
 All team members will collaborate on Task 5 to include visualization of their tasks.
 
 ## Setup and usage
@@ -90,8 +90,8 @@ pip install -r requirements.txt
 4. To reproduce our results, run the jupyter notebook `results.ipynb`. The first part (before Deep Analysis) could take a few minutes (due to the large size of some of the datasets).
 
 ### Contributors
-Colin Berger (colin.berger@epfl.ch)
-David Gauch (david.gauch@epfl.ch)
 Ezra Baup (estelle.baup@epfl.ch)
+Colin Berger (colin.berger@epfl.ch)
 Florian Comte (florian.comte@epfl.ch)
+David Gauch (david.gauch@epfl.ch)
 Mina Tang (mina.tang@epfl.ch)
