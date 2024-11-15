@@ -6,6 +6,7 @@
 
 data/*
 !data/preprocessed
+!data/README.md
 
 
 # Byte-compiled / optimized / DLL files
