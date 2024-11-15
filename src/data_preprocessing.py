@@ -340,20 +340,20 @@ def preprocess_movies(movie_data):
     """
 
     movie_data_preprocessed = movie_data.copy()
-
-    # Drop duplicated columns
-    movie_data_extracted = movie_data_preprocessed.drop(columns=['title', 'release_date', 'movie_release_year', 'title_from_second', 'movie_release_year'])
+    
+    # Drop unnecessary columns
+    movie_data_preprocessed = movie_data_preprocessed.drop(columns=['title', 'release_date', 'movie_release_year', 'title_from_second', 'movie_release_year', 'Year', 'Compounded_Inflation', 'release_year'])
 
     # Set lead_actor_2 to NaN where it is the same as lead_actor_1
-    movie_data_extracted.loc[movie_data_extracted['lead_actor_1'] == movie_data_extracted['lead_actor_2'], 'lead_actor_2'] = pd.NA
+    movie_data_preprocessed.loc[movie_data_preprocessed['lead_actor_1'] == movie_data_preprocessed['lead_actor_2'], 'lead_actor_2'] = pd.NA
 
     # Remove movies where we don't have lead actor
-    movie_data_extracted = movie_data_extracted.dropna(subset=['lead_actor_1'])
+    movie_data_preprocessed = movie_data_preprocessed.dropna(subset=['lead_actor_1'])
 
     # Keep only non-NaN values for all columns (the other columns have no missing values)
     columns_names = ['movie_release_date', 'runtime', 'languages', 'countries', 
                     'genres', 'lead_actor_1', 'box_office_revenue', 'averageRating', 'lead_actor_2']
-    movie_data_cleaned, reduction = keep_only_non_nans(movie_data_extracted, columns_names)
+    movie_data_cleaned, reduction = keep_only_non_nans(movie_data_preprocessed, columns_names)
 
     print(f"Removing NaN reduced the dataset by: {reduction:.2%}")
 
@@ -403,7 +403,7 @@ def extract_movies_with_lead_actors_data(movie_data_valid, character_data_valid)
 
     return lead_actor_data
 
-def adjust_inflation(movie_data):
+def adjust_inflation(movie_data_arg):
     """
     Calculate inflation adjusted box office revenue for movies in the dataset.
 
@@ -429,6 +429,8 @@ def adjust_inflation(movie_data):
     start_date = '1940-01-01'
     inflation_date = '1957-12-31'
     future_date = '2012-11-04'
+
+    movie_data = movie_data_arg.copy()
     #Movies before we have inflation data
     old_movies = movie_data[(movie_data['movie_release_date'] >= start_date) & (movie_data['movie_release_date'] <= inflation_date)]
 
@@ -475,10 +477,6 @@ def adjust_inflation(movie_data):
     movie_data_inflation['adjusted_box_office'] = (
         movie_data_inflation['box_office_revenue'] / (1 + movie_data_inflation['Compounded_Inflation'] / 100) * (1 + inflation_c['Compounded_Inflation'].iloc[-1]/100)  #box office value in 1958 dollars then convert to 2012 dollars
     )
-
-    #Drop unnecessary columns
-    movie_data_inflation = movie_data_inflation[['wikipedia_movie_id', 'freebase_movie_id', 'movie_name',
-       'release_year', 'movie_release_date', 'box_office_revenue', 'adjusted_box_office']]
-
+    
     return movie_data_inflation, percentage_filtered_inflation
 
