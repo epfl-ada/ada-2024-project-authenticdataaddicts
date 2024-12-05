@@ -1,11 +1,20 @@
 # ada-2024-project-authenticdataaddicts
 
 ## TODO (to delete later)
+
+- Try to do propensity matching for actor features (3.6, 3.7)
+- To be good or to be popular 
+- Try to create a model such that we can predict the revenue based on the film features (low priority)
+- Create the datastory of the website (define what we want to do/say)
+
+
 3.6 effect of gender
 3.7 ethnicity and height
 3.8 to be good or to be popular
 4 prediction
 datastory website
+
+
 
 ## Recipe for Success: Uncovering the actors behind a hit movie
 
