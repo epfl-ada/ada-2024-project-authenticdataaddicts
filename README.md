@@ -4,10 +4,11 @@
 
 ## TODO (to delete later)
 
-- Try to do propensity matching for actor features (3.6, 3.7)
-- To be good or to be popular 
-- Try to create a model such that we can predict the revenue based on the film features (low priority)
-- Create the datastory of the website (define what we want to do/say)
+- Try to do propensity matching for actor features (3.6, 3.7) -> Colin
+- To be good or to be popular (should we do propensity matching on it also ?) -> Ezra
+- Try to do clustering on something that makes sense in our project -> Florian
+- Try to create a model such that we can predict the revenue based on the film features -> Florian
+- Create the datastory of the website (define what we want to do/say and start writing the story) -> Mina/Ezra
 
 
 3.6 effect of gender
