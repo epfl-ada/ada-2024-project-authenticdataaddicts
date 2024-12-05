@@ -1,5 +1,7 @@
 # ada-2024-project-authenticdataaddicts
 
+[Project website](https://mina-tang.github.io/ada-2024-project-authenticdataaddicts/)
+
 ## TODO (to delete later)
 
 - Try to do propensity matching for actor features (3.6, 3.7)
