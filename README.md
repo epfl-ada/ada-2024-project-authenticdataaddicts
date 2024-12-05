@@ -5,9 +5,9 @@
 ## TODO (to delete later)
 
 - Try to do propensity matching for actor features (3.6, 3.7) -> Colin
-- To be good or to be popular (should we do propensity matching on it also ?) -> Ezra
-- Try to do clustering on something that makes sense in our project -> Florian
-- Try to create a model such that we can predict the revenue based on the film features -> Florian
+- To be good or to be popular (should we do propensity matching on it also ?) -> Florian (en fonction de ce que david tu preferes)
+- Try to do clustering on something that makes sense in our project -> Florian (en fonction de ce que david tu preferes)
+- Try to create a model such that we can predict the revenue based on the film features -> Florian (en fonction de ce que david tu preferes)
 - Create the datastory of the website (define what we want to do/say and start writing the story) -> Mina/Ezra
 
 
