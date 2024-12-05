@@ -1,5 +1,12 @@
 # ada-2024-project-authenticdataaddicts
 
+## TODO (to delete later)
+3.6 effect of gender
+3.7 ethnicity and height
+3.8 to be good or to be popular
+4 prediction
+datastory website
+
 ## Recipe for Success: Uncovering the actors behind a hit movie
 
 ### Abstract
