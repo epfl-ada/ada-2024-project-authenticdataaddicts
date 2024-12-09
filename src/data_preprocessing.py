@@ -438,3 +438,34 @@ def adjust_inflation(movie_data_arg):
     
     return movie_data_inflation, percentage_filtered_inflation
 
+
+def expand_most_common(df: pd.DataFrame, col: str, top: int) -> pd.DataFrame:
+    """
+    Expands one column of a DataFrame by the most common values.
+
+    The values in the column are expected to be lists of strings. The function
+    expands the column by creating new columns for the top most common values
+    in the lists.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to expand.
+        col (str): The column to expand.
+        top (int): The number of most common values to expand.
+    """
+
+    # Apply eval to the column to convert the strings to lists
+    series = df[col].apply(eval)
+
+    # Count the values in the lists and select the top most common
+    value_counts = series.explode().value_counts()
+    values = value_counts.head(top).index
+
+    def expand(row):
+        # Create a dictionary with the values as keys and booleans as values
+        return {value: value in row[col] for value in values}
+
+    # Apply the expand function to the DataFrame and convert to int
+    expanded = df.apply(expand, axis=1, result_type='expand')
+    expanded = expanded.astype(int)
+
+    return expanded
