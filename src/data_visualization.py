@@ -226,7 +226,7 @@ def count_actors(
     hue: str | None = None,
     axes: list[plt.Axes] = None,
 ):
-    """Plot count plots for the actor data.
+    """Plot pie charts for the actor data.
 
     Args:
         actors (pd.DataFrame): The actor dataset.
@@ -235,20 +235,31 @@ def count_actors(
     """
     columns = ["actor_gender", "actor_ethnicity_label"]
     titles = ["Actor gender distribution", "Most common ethnicities"]
-    labels = ["Gender", "Ethnicity"]
-    cutoffs = [None, 20]
-    horizontal = [False, True]
+    cutoffs = [None, 10]  # Set cutoff to 10 for both charts
 
-    count_plots(
-        actors,
-        columns,
-        titles,
-        labels,
-        cutoffs,
-        horizontal=horizontal,
-        hue=hue,
-        axes=axes,
-    )
+    if axes is None:
+        fig, axes = plt.subplots(1, len(columns), figsize=(6 * len(columns), 5))
+    else:
+        fig = None
+
+    for i, col in enumerate(columns):
+        col_counts = actors[col].value_counts()
+
+        cutoff = cutoffs[i]
+        if cutoff:
+            col_counts = col_counts[:cutoff]
+
+        # Plot pie chart
+        axes[i].pie(
+            col_counts.values,
+            labels=col_counts.index,
+            autopct='%1.1f%%',
+            startangle=140
+        )
+        axes[i].set_title(titles[i])
+
+    if fig:
+        fig.tight_layout()
 
 
 def count_movies(
@@ -280,7 +291,13 @@ def count_movies(
         axes=axes,
     )
 
-def inflation_plots(movie_inflation_data, top = False):
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+def inflation_plots(movie_inflation_data, top=False):
     """Plot with the average box office revenue over time (adjusted & unadjusted) 
     for all movies & for top 10 movies
 
@@ -288,27 +305,46 @@ def inflation_plots(movie_inflation_data, top = False):
         movie_inflation_data (pd.DataFrame): The inflation_dataset
         top (bool, optional): If True, plots for the top 10 movies. False if nothing specified.
     """
-    #Group by release year and calculate the average box office revenue
-    if top: #For top 10 movies
+    # Group by release year and calculate the average box office revenue
+    if top:  # For top 10 movies
         avg_box_office = movie_inflation_data.groupby('release_year').apply(
             lambda x: x.nlargest(10, 'box_office_revenue')
         ).reset_index(drop=True)
         avg_box_office = avg_box_office.groupby('release_year')[['adjusted_box_office', 'box_office_revenue']].mean()
-    else: #For all movies
+    else:  # For all movies
         avg_box_office = movie_inflation_data.groupby('release_year')[['adjusted_box_office', 'box_office_revenue']].mean()
 
-    #Convert box office to millions of dollars for readability
+    # Convert box office to millions of dollars for readability
     avg_box_office['adjusted_box_office'] = avg_box_office['adjusted_box_office'] / 1e6
     avg_box_office['box_office_revenue'] = avg_box_office['box_office_revenue'] / 1e6
 
-    #Plot the average box office revenue over time (adjusted & unadjuste)
+    # Prepare data for linear regression
+    years = avg_box_office.index.values.reshape(-1, 1)
+    adjusted_revenue = avg_box_office['adjusted_box_office'].values.reshape(-1, 1)
+    unadjusted_revenue = avg_box_office['box_office_revenue'].values.reshape(-1, 1)
+
+    # Fit linear regression for adjusted revenue
+    lr_adjusted = LinearRegression()
+    lr_adjusted.fit(years, adjusted_revenue)
+    adjusted_trend = lr_adjusted.predict(years)
+
+    # Fit linear regression for unadjusted revenue
+    lr_unadjusted = LinearRegression()
+    lr_unadjusted.fit(years, unadjusted_revenue)
+    unadjusted_trend = lr_unadjusted.predict(years)
+
+    # Plot the average box office revenue over time (adjusted & unadjusted)
     fig, ax = plt.subplots(figsize=(15, 6))
 
     sns.scatterplot(data=avg_box_office, x=avg_box_office.index, y='adjusted_box_office', label="Adjusted Box Office", color='blue')
     sns.scatterplot(data=avg_box_office, x=avg_box_office.index, y='box_office_revenue', label="Unadjusted Box Office", color='red')
 
+    # Plot regression lines
+    ax.plot(avg_box_office.index, adjusted_trend, color='blue', linestyle='--', label="Adjusted Trend")
+    ax.plot(avg_box_office.index, unadjusted_trend, color='red', linestyle='--', label="Unadjusted Trend")
+
     ax.set_title("Average Box Office of Movies over Time")
-    ax.set_xlabel("Movie release Year")
+    ax.set_xlabel("Movie Release Year")
     ax.set_ylabel("Average Box Office Revenue (in millions dollars)")
     ax.grid(axis='y')
     ax.legend()
