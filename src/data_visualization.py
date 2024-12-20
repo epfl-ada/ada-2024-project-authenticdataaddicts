@@ -339,3 +339,33 @@ def ate_barplot(rating_effects: pd.DataFrame, revenue_effects: pd.DataFrame, eff
     axes[1].set_title(f'Average effect of {effect.lower()} on log adjusted box office revenue')
 
     fig.tight_layout()
+    
+    
+def box_office_by_genre_barplot(movies: pd.DataFrame, column_bo = 'adjusted_box_office', cutoff = 10):
+    """Creates a bar plot showing the (adjusted) box office revenue by genre for the top 10 genres.
+    
+    Args:
+        movies (pd.DataFrame): The movie dataset with box office revenue and genres.
+        column_bo (str): column name (either 'box_office_revenue' or 'adjusted_box_office'). Default to adjusted.
+        cutoff (int): cutoff to show only the higher box offices. Default to 10.
+
+    """
+    # Some movies have multiple genres, so we need to look at all of them
+    genres_exploded = movies["genres"].apply(eval).explode()
+    genres_revenue_df = pd.DataFrame({
+        "genre": genres_exploded,
+        column_bo: movies.loc[genres_exploded.index, column_bo]
+    })
+
+    # Grouping by the genres to compare box office
+    genre_revenue_aggregated = genres_revenue_df.groupby("genre")[column_bo].sum().reset_index()
+    top_genres = genre_revenue_aggregated.sort_values(by=column_bo, ascending=False).head(cutoff)
+
+    plt.figure(figsize=(10, 5))
+    sns.barplot(x=column_bo, y='genre', data=top_genres)
+    adj_string = 'Adjusted ' if column_bo == 'adjusted_box_office' else ''
+    plt.title('Top ' + str(cutoff) + ' Genres by ' + adj_string + 'Box Office Revenue')
+    plt.xlabel('Total ' + adj_string + 'Box Office Revenue')
+    plt.ylabel('Genre')
+    plt.tight_layout()
+    plt.show()
