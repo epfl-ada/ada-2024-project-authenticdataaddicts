@@ -2,35 +2,18 @@
 
 [Project website](https://mina-tang.github.io/ada-2024-project-authenticdataaddicts/)
 
-## TODO (to delete later)
-
-- Try to do propensity matching for actor features (3.6, 3.7) -> Colin
-- To be good or to be popular (should we do propensity matching on it also ?) -> Florian (en fonction de ce que david tu preferes)
-- Try to do clustering on something that makes sense in our project -> Florian (en fonction de ce que david tu preferes)
-- Try to create a model such that we can predict the revenue based on the film features -> Florian (en fonction de ce que david tu preferes)
-- Create the datastory of the website (define what we want to do/say and start writing the story) -> Mina/Ezra
-
-
-3.6 effect of gender
-3.7 ethnicity and height
-3.8 to be good or to be popular
-4 prediction
-datastory website
-
-
-
 ## Recipe for Success: Uncovering the actors behind a hit movie
 
 ### Abstract
-While a movie storyline is often seen as its core, other factors like cast or genres may influence its success.
-This project examines what leads to a movies' success, with an emphasis on the effect of lead actors. We begin by studying intrinsic characterics of movies (genre, runtime) and how they correlate to a movie's success. We then investigate the lead actors' physical and demographic characteristic and whether they are correlated to a movie's success. We make sure to compare the differences between lead actors and all actors. By analyzing these traits across different genres, we aim to identify patterns linking specific actor attributes to successful movies. Movie success is defined by two metrics: box office performance and critical reception. Since high-grossing movies may not always be well-received, and vice versa, separating performance from reception could yield new insight. Ultimately, our goal is to determine how actor attributes influence a movie’s success, providing valuable understanding for casting decisions and broader industry trends.
+While a movie storyline is often seen as its core, other factors like cast or genres may influence its success. This project examines what leads to a movies' success, with an emphasis on the effect of lead actors.
+We begin by studying intrinsic characterics of movies (genre, runtime, language, etc.) to get a general sense of the data we are handling. 
+We then investigate the lead actors' physical and demographic characteristic and whether they are correlated to a movie's success. We make sure to compare the differences between lead actors and all actors. By also analyzing these traits across different genres, we aim to identify patterns linking specific actor attributes to successful movies. We also investigate whether the country of origin of a movie is correlated with its sucess. Movie success is defined by two metrics: box office performance and critical reception. Since high-grossing movies may not always be well-received, and vice versa, separating performance from reception could yield new insight. Ultimately, our goal is not only to determine whether actor attributes influence a movie’s success, but also identify characteristics of movies themselves that may affect its success. 
 
 ### Research questions
 - What genres and movie length lead to the most successful movies?
-- What correlation is there between a lead actor's physical and demographic characteristics and the success of the movie?
-- Do the type of actors who star in critically aclaimed movies different than those who star in box office hits? 
-- How does the genre of a movie influence our results? 
-- Do the relationships between actor characteristics and movie success change depending on time period?
+- Is there a correlation between lead actors' physical and demographic characteristics and the success of the movie they star in?
+- If there is indeed a correlation as mentioned in the above question, does it vary depending on the genre of the movie
+- Are movies genres that are more successful in the box office also more successful in terms of ratings?
 
 ### Additional datasets
 In addition to the CMU dataset, we also used:
@@ -55,38 +38,25 @@ We first needed to merge the datasets. We did this and split it into 5 datasets:
 We conducted a deeper analysis of the preprocessed data, to see if we could already find some interesting patterns relevant to our research questions. We did the following sub-tasks:
   - 3.1: *General deeper analysis and visualisation* of the preprocessed data.
   - 3.2: *Comparison between lead actors and all actors.*
-  - 3.3: *First Regression analysis*.
+    - 3.2.1: *Gender distribution of actors*
+    - 3.2.2: *Main ethnicities*
+    - 3.2.3: *Height and age*
+  - 3.3: *Regression analysis of actor and movie attributes*.
   - 3.4: *Box office and inflation*: adjust the box office on inflation, compare old and recent movies.
-  - 3.5: *Low vs high rating/revenue analysis*.
-
-These are future sub-tasks we wish to implement to complete the deep analysis.
-  - 3.6: *Effect of gender*: does having lead actors of the same gender help or hurt a movie's performance? We could first do a histogram for the average ratings/box office results for movies where both lead actors are the same gender, and those where both lead actors are different genders. Second, we would do a pie chart with these two categories for the top movies across different genres.
-  - 3.7: *Ethnicity and height*. To visualize this, we can use stacks (for height, we would use ranges rather than an exact number). We can compare the stack of the average actor with the stack of the lead actors of the most successful movies. 
-  - 3.8: *To be good or to be popular?* Analyzing the distribution of movie ratings compared to box office results. Here, we want to analyze the distribution of movies ratings compared to box office results. Are successful movies in one category necessarily successful in the other? In order to find out, we want to implement a scatterplot heatmap with one axis representing movie ratings and the other box office results. This is a great visualisation tool to see where most movies place on the 2D map.
+  - 3.5: *Rating vs revenue analysis depending on genre*.
 
 #### Task 4: Prediction
-With all this work, we would like to find if we can predict the revenue or rating of a movie, given its attributes and cast. This could be done with regression analysis, or a most sophisticated method.
+Thanks to all the data gathered earlier, we implemented a model that predicts the rating of a movie, given its attributes and cast. This is done by implementing a random forest on the chosen features. 
+
 
 #### Task 5: Datastory
-This would be the final step: presenting our project and results by telling a story.
+We implement a data story that can be seen (here)[https://mina-tang.github.io/ada-2024-project-authenticdataaddicts/]
 
-### Proposed timeline:
-15.11.2024: Tasks 1, 2, 3.1-3.5 <br /> 
-29.11.2024: Homework 2 <br /> 
-06.12.2024: Tasks 3.6-3.8 <br /> 
-09.12.2024: Task 4 <br /> 
-18.12.2024: Task 5 <br /> 
-20.12.2024: Deadline P3 <br /> 
-
-### Organization with the team (internal milestones until P3)
-Colin: 3.7, 4 <br /> 
-David: 3.6, 3.8 <br /> 
-Ezra: 3.6, 3.8 <br /> 
-Florian: 3.8, 4 <br /> 
-Mina: 3.7, 4 <br /> 
-All team members will collaborate on Task 5 to include visualization of their tasks.
 
 ## Setup and usage
+
+### Data story
+As previously mentioned, here is the link to our (Recipe for Success)[https://mina-tang.github.io/ada-2024-project-authenticdataaddicts/].
 
 ### Files and Folders Description
 * `results.ipynb`: the main notebook with all our results.
@@ -94,10 +64,13 @@ All team members will collaborate on Task 5 to include visualization of their ta
 * `data/preprocessed`: folder containing the preprocessed data (to directly do the analysis).
 * `src/`: folder containing the utility functions for the different steps of the project:
     - `data_completion.py`: for merging and completing our datasets;
+    - `data_evaluation.py`: for propensity matching
     - `data_fetching.py`: to fetch and query some of the datasets;
     - `data_loading.py`: to load the CMU movie dataset;
     - `data_preprocessing`: useful tools for preprocessing;
     - `data_visualization.py`: useful tools for data visualization.
+    - `model_convert_to_onxx.py`: ???
+    - `model_random_forest.py`: to implement the prediction model.
 
 ### Get started
 1. Clone this github repository.
@@ -114,5 +87,3 @@ Colin Berger (colin.berger@epfl.ch)
 Florian Comte (florian.comte@epfl.ch)
 David Gauch (david.gauch@epfl.ch)
 Mina Tang (mina.tang@epfl.ch)
-
-**Note:** As per specified on [Ed](https://edstem.org/eu/courses/1490/discussion/140562), we did not count the setup and usage as part of the 1000 word limit.
