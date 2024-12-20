@@ -111,3 +111,10 @@ Colin Berger (colin.berger@epfl.ch)
 Florian Comte (florian.comte@epfl.ch)
 David Gauch (david.gauch@epfl.ch)
 Mina Tang (mina.tang@epfl.ch)
+
+#### Repartition of the work (for P3)
+Colin: propensity matching for actor features, statistical tests
+Florian: predictions (results and datastory)
+David: clustering
+Ezra: datastory, writing+pyplot
+Mina: datastory, writing+pyplot
