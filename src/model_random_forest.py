@@ -284,7 +284,7 @@ def random_forest_model():
     X_rating_train, X_rating_test, y_rating_train, y_rating_test = train_test_split(X_rating, y_rating, test_size=0.2, random_state=42)
 
     # Standardize
-    numerical_columns_rating = X_rating.select_dtypes(include=['float64', 'int64']).columns
+    numerical_columns_rating = X_rating_train.select_dtypes(include=['float64', 'int64', 'int32']).columns
 
     # Initialize the scaler
     scaler = StandardScaler()
