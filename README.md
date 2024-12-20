@@ -14,7 +14,7 @@ We then investigate the lead actors' physical and demographic characteristic and
 
 - What genres lead to the most successful movies?
 - Is there a correlation between lead actors' physical and demographic characteristics and the success of the movie they star in?
-- If there is indeed a correlation as mentioned in the above question, does it vary depending on the genre of the movie
+- If there is indeed a correlation as mentioned in the above question, does it vary depending on the genre of the movie?
 - Are movies genres that are more successful in the box office also more successful in terms of ratings?
 
 ### Additional datasets
