@@ -82,13 +82,14 @@ As previously mentioned, here is the link to our (Recipe for Success)[https://mi
 * `data/`: folder containing all datasets (after loading them). See the dedicated README for more details.
 * `data/preprocessed`: folder containing the preprocessed data (to directly do the analysis).
 * `src/`: folder containing the utility functions for the different steps of the project:
+  - `clustering.py`: helpers for clustering;
   - `data_completion.py`: for merging and completing our datasets;
   - `data_evaluation.py`: for propensity matching
   - `data_fetching.py`: to fetch and query some of the datasets;
   - `data_loading.py`: to load the CMU movie dataset;
   - `data_preprocessing`: useful tools for preprocessing;
-  - `data_visualization.py`: useful tools for data visualization.
-  - `model_convert_to_onxx.py`: useful tools to convert the model and scalers to universal model and use it on the website (JavaScript)
+  - `data_visualization.py`: useful tools for data visualization;
+  - `model_convert_to_onxx.py`: useful tools to convert the model and scalers to universal model and use it on the website (JavaScript);
   - `model_random_forest.py`: to implement the prediction model.
 
 ### Get started
