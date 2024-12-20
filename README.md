@@ -2,7 +2,7 @@
 
 [Project website](https://mina-tang.github.io/ada-2024-project-authenticdataaddicts/)
 
-## Recipe for Success: Uncovering the actors behind a hit movie
+## Recipe for Success
 
 ### Abstract
 
