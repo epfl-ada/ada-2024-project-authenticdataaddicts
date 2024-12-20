@@ -314,3 +314,28 @@ def inflation_plots(movie_inflation_data, top = False):
     ax.legend()
 
     plt.show()
+
+
+def ate_barplot(rating_effects: pd.DataFrame, revenue_effects: pd.DataFrame, effect: str):
+    """Creates a bar plot showing the average rating and revenue effects.
+
+    Args:
+        rating_effects (pd.DataFrame): The average rating effects.
+        revenue_effects (pd.DataFrame): The box office revenue effects.
+        effect (str): The effect's name.
+    """
+
+    rating_country_effect = rating_effects.sort_values('ATE', ascending=False)
+    revenue_country_effect = revenue_effects.loc[rating_country_effect.index]
+
+    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
+
+    sns.barplot(rating_country_effect.reset_index(names=['index']), y='index', x='ATE', ax=axes[0])
+    axes[0].set_ylabel(effect)
+    axes[0].set_title(f'Average effect of {effect.lower()} on average rating')
+
+    sns.barplot(revenue_country_effect.reset_index(names=['index']), y='index', x='ATE', ax=axes[1])
+    axes[1].set_ylabel(effect)
+    axes[1].set_title(f'Average effect of {effect.lower()} on log adjusted box office revenue')
+
+    fig.tight_layout()

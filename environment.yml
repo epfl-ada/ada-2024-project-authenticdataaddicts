@@ -1,0 +1,13 @@
+name: ada-project
+channels:
+  - defaults
+dependencies:
+  - ipykernel
+  - kagglehub
+  - matplotlib
+  - numpy
+  - pandas
+  - seaborn
+  - statsmodels
+  - scikit-learn
+  - networkx

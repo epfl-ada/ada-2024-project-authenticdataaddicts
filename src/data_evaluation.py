@@ -87,9 +87,9 @@ def ate_categorical_values(data: pd.DataFrame, categorical: list[str], effect: s
         control_mean = effect_values[control_indices].mean()
         ate = round(treated_mean - control_mean, 4)
 
-        effects.append((category, ate, treated_mean, control_mean))
+        effects.append((category, ate, treated_mean, control_mean, len(treated_indices)))
 
-    effects = pd.DataFrame(effects, columns=['treatment', 'ATE', 'treatment_mean', 'control_mean'])
+    effects = pd.DataFrame(effects, columns=['treatment', 'ATE', 'treatment_mean', 'control_mean', 'size'])
     effects = effects.set_index('treatment')
 
     return effects

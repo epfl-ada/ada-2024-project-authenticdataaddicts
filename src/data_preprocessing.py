@@ -3,6 +3,135 @@ import pandas as pd
 from src.data_fetching import fetch_freebase_labels
 import os
 
+ETHNICITY_GROUPS = {
+    "Asian": [
+        'Tamil', 'Punjabis', 'Malayali', 'Gujarati people', 'Telugu people', 
+        'Bengali', 'Bengali Hindus', 'Sindhis', 'Indian Americans', 'Indians',
+        'Afghans in India', 'Pathani', 'Kanyakubja Brahmins', 'Chitrapur Saraswat Brahmin',
+        'Parsi', 'Tamil Brahmin', 'Japanese people', 'Chinese Americans', 'Hongkongers', 'Malaysian Chinese',
+        'Japanese Americans', 'British Chinese', 'Filipino Americans', 'Koreans', 'Asian people', 'Indonesian Americans',
+        'Bunt (RAJPUT)', 'Marathi people', 'Chinese Canadians', 'Taiwanese Americans'
+    ],
+    "White": [
+        'Irish people', 'Welsh people', 'Scottish people', 'English people', 'French', 
+        'Italians', 'Germans', 'Swiss', 'Dutch', 'Norwegians', 'Austrians', 'Danes', 'Swedes',
+        'English Australians', 'Scottish Canadians', 'Irish Australians', 'Italian Australians',
+        'Hungarian Americans', 'Greek Americans', 'Portuguese Americans', 'Czech Americans',
+        'Slovak Americans', 'Lithuanian Americans', 'Romanichal', 'Armenians', 
+        'Croatian Americans', 'Serbian Americans', 'Albanian Americans', 'Russian Americans',
+        'Ukrainian Americans', 'Hungarians', 'Polish Americans', 'Polish Canadians', 
+        'French Canadians', 'Anglo-Irish people', 'Scandinavian Americans', 'British Americans',
+        'British Nigerian', 'British Indian', 'Ashkenazi Jews', 'European Americans', 'White Americans',
+        'White British', 'White people', 'Irish Americans', 'Swedish Americans', 'German Americans',
+        'English Australian', 'Italian Americans', 'Scotch-Irish Americans', 'English Americans',
+        'Scottish Americans', 'Croatian Australians', 'Americans',  'Canadian Americans',
+        'Irish migration to Great Britain', 'Dutch Americans', 'Russians', 'Cajun',
+        'French Americans', 'British', 'Australian Americans', 'Danish Americans', 'Ukrainians',
+        'Italian Canadians', 'Norwegian Americans', 'Greek Canadians', 'Australians', 'Welsh Americans',
+        'Russian Canadians', 'Anglo-Celtic Australians', 'Sicilian Americans'
+
+    ],
+    "African": [
+        'African Americans', 'Black people', 'Ghanaian Americans', 
+        'Afro Trinidadians and Tobagonians', 'White Africans of European ancestry', 'Black Canadians'
+    ],
+    "Indigenous": [
+        'Indigenous peoples of the Americas', 'Native Americans in the United States', 
+        'Māori', 'Sámi people', 'Cherokee', 'Pacific Islander Americans', 'Lumbee', 'Puerto Ricans',
+        'Bolivian American'
+    ],
+    "Hispanic": [
+        'Mexicans', 'Mexican Americans', 'Spanish Americans', 'Portuguese Americans',
+        'Hispanic and Latino Americans', 'Dominican Americans', 'Honduran Americans', 'Stateside Puerto Ricans',
+        'Spaniards'
+    ],
+    "Other ethnicity": [
+        'Akan people', 'Native Hawaiians', 'Romani people', 'Kayastha', 'Q31340083', 'multiracial American', 'Black Irish',
+        'Ashkenazi Jews', 'Jewish people', 'American Jews', 'Israeli Americans', 'Kiwi', 'Latin American British', 'Palestinians in the United States',
+        'Syrian Americans', 'Bolivian Americans', 'Criollo people'
+    ]
+}
+
+ETHNICITY_MAPPING = {ethnicity: group for group, ethnicities in ETHNICITY_GROUPS.items() for ethnicity in ethnicities}
+
+GENRE_GROUPS = {
+    "Action and Adventure": [
+        "Action/Adventure", "Adventure", "Action", "Adventure Comedy", "Swashbuckler films", 
+        "Fantasy Adventure", "Sword and Sandal", "Sword and sorcery films", "Fantasy", 
+        "Wuxia", "Epic", "Hybrid Western", "Science fiction Western", "Space western", 
+        "Chase Movie", "Escape Film", "Spy", "Heist", "Biker Film", "Auto racing", 'War film',
+        'Combat Films', 'Western', "Indian Western", 'Costume Adventure', 'Revisionist Western',
+        'Epic Western', 'Prison film', 'Prison', 'Spaghetti Western', 'Women in prison films'
+    ],
+    "Comedy": [
+        "Comedy", "Comedy film", "Slapstick", "Screwball comedy", "Parody", "Comedy Thriller", 
+        "Comedy of manners", "Gross-out film", "Satire", "Black comedy", "Dark comedy", 
+        "Romantic comedy", "Tragicomedy", "Teen", "Buddy film", "Buddy cop", "Stoner film", 
+        "Domestic Comedy", "Musical comedy", "Workplace Comedy", "Courtroom Comedy", 
+        "Crime Comedy", "Gay Interest", "Adventure Comedy", 'Comedy-drama', 'Comedy of Errors',
+        'Family Film', 'Sex comedy', 'Horror Comedy', 'Action Comedy', 'Comedy Western',
+        'Stand-up comedy', 'Humour'
+    ],
+    "Drama": [
+        "Drama", "Melodrama", "Family Drama", "Inspirational Drama", "Psychological thriller", 
+        "Historical drama", "Costume drama", "Marriage Drama", "Childhood Drama", 
+        "Coming of age", "Tragedy", "Addiction Drama", "Medical fiction", "Courtroom Drama", 
+        "Feminist Film", "Family-Oriented Adventure", "Existentialism", "Period piece",
+        'Political drama', 'Disaster', 'Natural disaster', 'Fantasy Drama', 'Legal drama'
+    ],
+    "Horror and Thrillers": [
+        "Horror", "Supernatural", "Zombie Film", "Slasher", "Monster movie", 
+        "Creature Film", "Haunted House Film", "Gothic Film", "Splatter film", 
+        "Natural horror films", "Sci-Fi Horror", "Psychological thriller", "Suspense", 
+        "Thriller", "Crime Thriller", "Erotic thriller", 'Political thriller',
+        'Action Thrillers', 'Costume Horror', 'Monster'
+    ],
+    "Fantasy and Sci-Fi": [
+        "Science Fiction", "Fantasy", "Cyberpunk", "Dystopia", "Time travel", 
+        "Mythological Fantasy", "Apocalyptic and post-apocalyptic fiction", "Alien Film", 
+        "Steampunk", "Sci-Fi Adventure", "Fantasy Comedy", "Romantic fantasy", 
+        "Revisionist Fairy Tale", 'Sword and sorcery', 'Superhero movie', 'Animation',
+        'Computer Animation', 'Anime', 'Superhero', 'Werewolf fiction'
+    ],
+    "Historical and Biographical": [
+        "Historical drama", "Historical Epic", "Biographical film", "Hagiography", 
+        "Historical fiction", "Docudrama", "Period piece", "History", "Bollywood", 
+        "Japanese Movies", "Chinese Movies", "Bengali Cinema",
+        'Biography', 'Cold War', 'Gulf War', 'British Empire Film',
+        'Historical Documentaries', 'Archives and records'
+    ],
+    "Romance and Relationships": [
+        "Romance Film", "Romantic drama", "Romantic comedy", "Gay Themed", 
+        "Gay Interest", "LGBT", "Erotica", "Erotic Drama"
+    ],
+    "Crime": [
+        "Crime", "Crime Drama", "Crime Fiction", "Gangster Film", 
+        "Caper story", "Mystery", "Detective fiction", "Whodunit", "Kafkaesque", 'Detective',
+        'Glamorized Spy Film'
+    ],
+    "Musicals and Dance": [
+        "Musical", "Music", "Jukebox musical", "Musical Drama", "Dance", 
+        "Backstage Musical", "Heavenly Comedy", 'Punk rock'
+    ],
+    "Other genre": [
+        "Art film", "Indie", "Experimental", "New Hollywood", "Absurdism", 
+        "Albino bias", "Surrealism", "Cult", "Mockumentary", "Existentialism", 
+        "Political satire", "Political cinema", "Propaganda film", "Anti-war film",
+        'Gay', 'Ensemble Film', 'Biopic [feature]', 'World cinema', 'Demonic child',
+        'Anti-war', 'B-movie', 'Film adaptation', 'Doomsday film', "Neo-noir", "Film noir", 
+        'Sports', 'Boxing', 'Americana', 'Remake', 'Martial Arts Film', 'Future noir','Road movie', 'Short Film', 'Baseball', 'Airplanes and airports', 'Stop motion',
+        'Religious Film', 'Slice of life story', 'Black-and-white', 'Roadshow theatrical release',
+        'Christian film', 'Hip hop movies', 'Christmas movie', 'Film à clef', 'Jungle Film',
+        'Media Satire', 'Anthology', 'Animal Picture', 'Sexploitation', 'Holiday Film',
+        'Silent film', 'Plague', 'Animal Picture', 'Blaxploitation', 'School story',
+        'Television movie', 'Gross out', 'Samurai cinema', 'Female buddy film', 'Adult',
+        'Documentary', 'Social problem film', 'Outlaw', 'Social problem film', 'Private military company',
+        'Reboot', 'Parkour in popular culture', 'Reboot', 'Fairy tale', 'Ninja movie'
+    ]
+}
+
+GENRE_MAPPING = {genre: group for group, genres in GENRE_GROUPS.items() for genre in genres}
+
 def compute_reduction(df_before, df_after):
     """ 
     Compute the reduction in size between two datasets.
@@ -469,3 +598,106 @@ def expand_most_common(df: pd.DataFrame, col: str, top: int) -> pd.DataFrame:
     expanded = expanded.astype(int)
 
     return expanded
+
+def percentile_bins(data: pd.Series, bins=3) -> pd.DataFrame:
+    """
+    Cuts the data into equal sized bins. This is useful for transforming
+    numerical data into categorical data.
+
+    Args:
+        data (pd.Series): The data series to cut into bins.
+        bins (int): The number of bins.
+    """
+
+    percentages = np.linspace(0, 100, bins + 1)
+    percentiles = np.percentile(data, percentages)
+    
+    result = np.zeros((len(data)))
+    for i in range(1, bins):
+        result[data > percentiles[i]] += 1
+
+    columns = [f"{data.name}_[{percentiles[i]},{percentiles[i + 1]}]" for i in range(0, bins)]
+
+    df = pd.get_dummies(result).astype(int)
+    df.columns = columns
+
+    return df
+
+def extract_categorical_features(df: pd.DataFrame, top: int = 10) -> tuple[pd.DataFrame, dict]:
+    """Extracts the categorical features of our full movie dataset merged with our lead actors.
+
+    Args:
+        df (pd.DataFrame): The merged data frame
+        top (int, optional): The number of top languages and countries to take. Defaults to 10.
+
+    Returns:
+        pd.DataFrame: The features as categorical values.
+        dict: The coluns of the mapped features.
+    """
+    genres = df['genres'].apply(eval).apply(lambda genres: [GENRE_MAPPING.get(genre, "Other") for genre in genres])
+    df['genres_mapped'] = genres.apply(str)
+
+    male = (df['actor_gender'] == 'M').astype(int)
+    languages = expand_most_common(df, 'languages', top)
+    countries = expand_most_common(df, 'countries', top)
+    genres = expand_most_common(df, 'genres_mapped', top)
+
+    ethnicity = df['actor_ethnicity_label'].map(ETHNICITY_MAPPING)
+    ethnicity = pd.get_dummies(ethnicity)
+    ethnicity = ethnicity.astype(int)
+
+    height = percentile_bins(df['actor_height'], 3)
+    age = percentile_bins(df['actor_age_at_release'], 6)
+    runtime = percentile_bins(df['runtime'], 3)
+    release_year = percentile_bins(df['release_year'], 4)
+
+    categorical = pd.concat([male, languages, countries, genres, ethnicity, height, age, runtime, release_year], axis=1)
+
+    columns = {
+        'gender': ['actor_gender'],
+        'languages': languages.columns,
+        'countries': countries.columns,
+        'genres': genres.columns,
+        'ethnicities': ETHNICITY_GROUPS.keys(),
+        'height': height.columns,
+        'age': age.columns,
+        'runtime': runtime.columns,
+        'release_year': release_year.columns
+    }
+
+    return categorical, columns
+
+def log_transform(df: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
+    """Log transform columns.
+
+    Args:
+        df (pd.DataFrame): The dataframe containing the columns.
+        columns (list[str]): The columns to log transform.
+
+    Returns:
+        pd.DataFrame: The log transformed columns.
+    """
+    data = df[columns]
+    log = np.log(data)
+
+    # Add log prefix
+    log.columns = list(map(lambda c: 'log_' + c, columns))
+
+    return log
+
+def extract_numerical_features(df: pd.DataFrame) -> pd.DataFrame:
+    """Extracts the numerical features of our full movie dataset merged with our lead actors.
+
+    Args:
+        df (pd.DataFrame): The merged data frame
+
+    Returns:
+        pd.DataFrame: The extracted numerical features.
+    """
+    log_values = log_transform(df, ['adjusted_box_office', 'numVotes'])
+
+    numerical = df[['averageRating']].copy()
+    numerical['actor_dob'] = df['actor_dob'].dt.year.copy()
+    numerical[log_values.columns] = log_values
+
+    return numerical
